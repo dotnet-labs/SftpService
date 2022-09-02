@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Renci.SshNet;
 using Renci.SshNet.Sftp;
 
@@ -36,8 +33,8 @@ namespace SFTPService
             }
             catch (Exception exception)
             {
-                _logger.LogError(exception, $"Failed in listing files under [{remoteDirectory}]");
-                return null;
+                _logger.LogError(exception, "Failed in listing files under [{remoteDirectory}]", remoteDirectory);
+                return new List<SftpFile>();
             }
             finally
             {
@@ -53,11 +50,11 @@ namespace SFTPService
                 client.Connect();
                 using var s = File.OpenRead(localFilePath);
                 client.UploadFile(s, remoteFilePath);
-                _logger.LogInformation($"Finished uploading file [{localFilePath}] to [{remoteFilePath}]");
+                _logger.LogInformation("Finished uploading the file [{localFilePath}] to [{remoteFilePath}]", localFilePath, remoteFilePath);
             }
             catch (Exception exception)
             {
-                _logger.LogError(exception, $"Failed in uploading file [{localFilePath}] to [{remoteFilePath}]");
+                _logger.LogError(exception, "Failed in uploading the file [{localFilePath}] to [{remoteFilePath}]", localFilePath, remoteFilePath);
             }
             finally
             {
@@ -73,11 +70,11 @@ namespace SFTPService
                 client.Connect();
                 using var s = File.Create(localFilePath);
                 client.DownloadFile(remoteFilePath, s);
-                _logger.LogInformation($"Finished downloading file [{localFilePath}] from [{remoteFilePath}]");
+                _logger.LogInformation("Finished downloading the file [{localFilePath}] from [{remoteFilePath}]", localFilePath, remoteFilePath);
             }
             catch (Exception exception)
             {
-                _logger.LogError(exception, $"Failed in downloading file [{localFilePath}] from [{remoteFilePath}]");
+                _logger.LogError(exception, "Failed in downloading the file [{localFilePath}] from [{remoteFilePath}]", localFilePath, remoteFilePath);
             }
             finally
             {
@@ -92,11 +89,11 @@ namespace SFTPService
             {
                 client.Connect();
                 client.DeleteFile(remoteFilePath);
-                _logger.LogInformation($"File [{remoteFilePath}] deleted.");
+                _logger.LogInformation("File [{remoteFilePath}] is deleted.", remoteFilePath);
             }
             catch (Exception exception)
             {
-                _logger.LogError(exception, $"Failed in deleting file [{remoteFilePath}]");
+                _logger.LogError(exception, "Failed in deleting thefile [{remoteFilePath}]", remoteFilePath);
             }
             finally
             {
