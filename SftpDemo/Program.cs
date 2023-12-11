@@ -30,9 +30,9 @@ Console.WriteLine();
 
 // download a file
 Console.WriteLine("Download a file from the SFTP directory:");
-const string pngFile = @"hi.png";
+const string pngFile = "hi.png";
 File.Delete(pngFile);
-sftpService.DownloadFile(@"/pub/example/imap-console-client.png", pngFile);
+sftpService.DownloadFile("/pub/example/imap-console-client.png", pngFile);
 if (File.Exists(pngFile))
 {
     Console.WriteLine($"\t file {pngFile} downloaded");
@@ -42,6 +42,7 @@ Console.WriteLine();
 // upload a file // not working for this demo SFTP server due to readonly permission
 Console.WriteLine("Upload a file to the SFTP directory:");
 var testFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "test.txt");
-sftpService.UploadFile(testFile, @"/pub/test.txt");
-sftpService.DeleteFile(@"/pub/test.txt");
+sftpService.UploadFile(testFile, "/pub/test.txt");
+sftpService.DeleteFile("/pub/test.txt");
+
 Console.WriteLine();
